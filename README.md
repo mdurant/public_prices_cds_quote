@@ -1,61 +1,186 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Price Scraper and Quotation System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este proyecto es un servicio web diseñado para automatizar el proceso de recopilación de precios públicos de productos mediante web scraping. Los datos obtenidos se almacenan en una base de datos relacional (MySQL/PostgreSQL), lo que permite a los usuarios generar presupuestos que pueden enviarse por correo electrónico a los clientes. El sistema también incluye autenticación de usuarios y un panel de control para gestionar productos y ofertas.
 
-## About Laravel
+## Technologies Used
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Este proyecto está construido con una variedad de tecnologías web modernas:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+*   **Backend:**
+    *   PHP 8.2+
+    *   Laravel Framework 12.0
+*   **Frontend:**
+    *   JavaScript
+    *   Bootstrap 5.2.3
+    *   Sass
+    *   Vite
+*   **Database:**
+    *   MySQL (Recommended)
+    *   PostgreSQL (Supported)
+    *   SQLite (Default for local development, configurable)
+*   **Web Scraping:**
+    *   Guzzle HTTP Client
+    *   Symfony DOMCrawler
+*   **PHP Libraries:**
+    *   `laravel/ui` for basic auth scaffolding
+    *   `spatie/laravel-permission` for role-based access control (if extensively configured)
+    *   `spatie/crawler` for web scraping (as per composer.json)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Features
 
-## Learning Laravel
+El sistema incluye las siguientes características clave:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+*   **Automated Web Scraping:** Extrae periódicamente los precios de los productos de una fuente pública determinada.
+*   **Centralized Database:** Almacena toda la información sobre productos y precios en una base de datos estructurada (MySQL o PostgreSQL).
+*   **User Authentication:** Sistema seguro de inicio de sesión y registro de usuarios.
+*   **Quotation Management:**
+    *   Cree nuevos presupuestos seleccionando productos y especificando cantidades.
+    *   Ver, editar y eliminar (supresión suave) los presupuestos existentes.
+    *   Restaurar las cotizaciones/presupuestos eliminados.
+*   **Product Search:** Búsqueda rápida de productos por descripción o código al crear presupuestos.
+*   **Dashboard:** Un panel intuitivo para ver la actividad reciente y gestionar los componentes del sistema.
+*   **Email Notifications:** Envío automático de los presupuestos generados a los clientes por correo electrónico.
+*   **Data Integrity:** Validaciones para garantizar la exactitud de los datos de productos y ofertas.
+*   **Price Tracking:** Almacena tanto los precios FONASA para pacientes como los precios privados de los productos.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Project Setup
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Siga estos pasos para configurar el proyecto localmente para desarrollo o pruebas:
 
-## Laravel Sponsors
+### Prerequisites
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+*   PHP 8.2 or higher
+*   Composer (PHP package manager)
+*   Node.js and npm (or yarn)
+*   A database server (MySQL 5.7+ or PostgreSQL 10+)
 
-### Premium Partners
+### Installation Steps
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+1.  **Clonar el repositorio:**
+    ```bash
+    git clone <your-repository-url>
+    cd <project-directory-name>
+    ```
 
-## Contributing
+2.  **Instalar Dependencias PHP:**
+    ```bash
+    composer install
+    ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+3.  **Instalar Dependencias de JavaScript :**
+    ```bash
+    npm install
+    # or if you use yarn
+    # yarn install
+    ```
 
-## Code of Conduct
+4.  **Crear Archivo ENV de configuración:**
+    Copie el archivo de entorno de ejemplo y personalícelo según sea necesario.
+    ```bash
+    cp .env.example .env
+    ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+5.  **Generar clave de aplicación:**
+    ```bash
+    php artisan key:generate
+    ```
 
-## Security Vulnerabilities
+6.  **Configurar valores de las variables (.env file):**
+    Abrir el archivo `.env` fy agregue los valores necesarios:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    *   **URL de Aplicación:**
+        ```ini
+        APP_URL=http://localhost:8000 
+        ```
+        (Ajústelo si utiliza un dominio o puerto local diferente)
 
-## License
+    *   **Conexión de Base de Datos:**
+        Establezca el tipo de base de datos y las credenciales. Ejemplo para MySQL:
+        ```ini
+        DB_CONNECTION=mysql
+        DB_HOST=127.0.0.1
+        DB_PORT=3306
+        DB_DATABASE=your_database_name
+        DB_USERNAME=your_database_user
+        DB_PASSWORD=your_database_password
+        ```
+        Asegúrese de que la base de datos especificada (`your_database_name`) existe en su servidor..
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    *   **Configuración Driver de EMAIL:**
+        Configure su servicio de envío de correo electrónico (e.g., SMTP, Mailgun, Postmark). Ejemplo para SMTP:
+        ```ini
+        MAIL_MAILER=smtp
+        MAIL_HOST=sandbox.smtp.mailtrap.io
+        MAIL_PORT=2525
+        MAIL_USERNAME=your_smtp_username
+        MAIL_PASSWORD=your_smtp_password
+        MAIL_ENCRYPTION=tls
+        MAIL_FROM_ADDRESS="hello@example.com"
+        MAIL_FROM_NAME="${APP_NAME}"
+        ```
+
+    *   **URL Servicio de Scraping:**
+        Establezca la URL base para el sitio web que desea raspar.
+        ```ini
+        BASE_URL_SCRAPING_SERVICE="https://www.example-target-scrape-site.com/prices?page="
+        ```
+        *(Asegúrese de que esta URL es correcta y apunta a la lista de precios paginada)*
+
+7.  **Ejecutar migraciones de bases de datos:**
+    Esto creará las tablas necesarias en su base de datos.
+    ```bash
+    php artisan migrate
+    ```
+
+8.  **(Opcional) Ejecutar Database Seeders:**
+    Si el proyecto incluye seeders de datos iniciales (Ej:., admin user, default settings):
+    ```bash
+    php artisan db:seed
+    ```
+
+9.  **Build Frontend Assets:**
+    Compilar archivos JS y CSS.
+    ```bash
+    npm run build
+    # or if you use yarn
+    # yarn build
+    ```
+    Para el desarrollo, puede utilizar `npm run dev` (o `yarn dev`) para activar la recarga en caliente.
+
+## Running the Application
+
+### Development Server
+
+Para ejecutar el servidor de desarrollo de Laravel (normalmente en `http://localhost:8000`):
+```bash
+php artisan serve
+```
+
+Si también utiliza Vite para el desarrollo frontend con sustitución de módulos en caliente:
+```bash
+npm run dev
+# or
+# yarn dev
+```
+Este comando (usualmente configurado en el script `dev` de `composer.json` o ejecutado en una terminal separada) típicamente iniciará el servidor de desarrollo Vite junto con el servidor PHP.
+
+### Product Scraping
+
+Para activar manualmente el proceso de raspado web de los precios de los productos:
+```bash
+php artisan scrape:products
+```
+Este comando obtendrá los últimos precios del `BASE_URL_SCRAPING_SERVICE` configurado y actualizará la base de datos.
+
+**Nota:** Para el scraping regular y automatizado en un entorno de producción, este comando debe programarse como una tarea cron. Por ejemplo, para que se ejecute diariamente a medianoche:
+```cron
+0 0 * * * cd /path/to/your/project && php artisan scrape:products >> /dev/null 2>&1
+```
+Ajuste la ruta y el horario según sea necesario.
+
+## Support and Development
+
+Este proyecto fue desarrollado y es soportado por: **Integral Tech Consulting Spa.**
+
+*   **CTO:** Mauricio Durán
+*   **Contacto:** [mauricio@integraltech.cl](mailto:mauricio@integraltech.cl)
